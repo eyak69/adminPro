@@ -1,0 +1,12 @@
+<ng-container [formGroup]="miFormulario">
+    <div class="field">
+        <label for="{{ controlName }}">{{ labelText }}</label>
+        <p-multiSelect [options]="lista" formControlName="{{ controlName }}" defaultLabel="{{ defaultLabel }}"
+            optionLabel="{{optionLabel}}" display="chip">
+        </p-multiSelect>
+        <div [style.color]="'red'" [style.margin-top.px]="5" *ngIf="control!.hasError('required')">
+            No puede estar vacio
+        </div>
+        <ng-content></ng-content>
+    </div>
+</ng-container>

@@ -1,0 +1,41 @@
+<p-toast></p-toast>
+<div class="card">
+    <h3>{{isEditar?'Editar Usuario':'Nuevo Usuario'}}</h3>
+    <form autocomplete="off" [formGroup]="miFormulario" (ngSubmit)="submit()">
+
+        <div class="card p-fluid">
+            <app-text-group labelText="Nombre de Usuario" inputType="text" controlName="username"
+                (textChanged)="handleTextChanged($event)">
+            </app-text-group>
+
+            <app-text-group labelText="Email" inputType="email" controlName="email"
+                (textChanged)="handleTextChanged($event)">
+            </app-text-group>
+
+            <div *ngIf="!isEditar">
+                <app-password-group labelText="Password" controlName="password">
+                </app-password-group>
+                <app-password-group labelText="Repetir Password" controlName="passwordRepetir">
+                    <div [style.color]="'red'" [style.margin-top.px]="5"
+                        *ngIf="miFormulario.hasError('passwordMismatch') && (miFormulario.get('password')?.dirty || miFormulario.get('passwordRepetir')?.dirty)">
+                        Las contraseñas no coinciden.
+                    </div>
+                </app-password-group>
+            </div>
+
+            <app-multiselect-group controlName="sucursales" optionLabel="name" [lista]="sucursal"
+                defaultLabel="Elija Sucursar" labelText="Sucursal">
+            </app-multiselect-group>
+
+            <!--
+            <app-dropdown-group controlName="sucursales" optionLabel="name" [lista]="sucursal"
+                 labelText="Sucursal" placeholder="sucursales">
+            </app-dropdown-group>
+ -->
+        </div>
+        <br>
+
+        <app-button-group [formGroup]="miFormulario" (cancelarEvent)="cancelar()"></app-button-group>
+
+    </form>
+</div>

@@ -1,0 +1,305 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>sakai-ng documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	   <link rel="stylesheet" href="../styles/style.css">
+        <link rel="stylesheet" href="../styles/dark.css">
+    </head>
+    <body>
+
+        <div class="navbar navbar-default navbar-fixed-top visible-xs">
+            <a href="../" class="navbar-brand">sakai-ng documentation</a>
+            <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="hidden-xs menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content interface">
+                   <div class="content-data">
+
+
+
+
+
+
+
+
+
+
+
+
+
+<ol class="breadcrumb">
+  <li>Interfaces</li>
+  <li
+  >
+  expandedRows</li>
+</ol>
+
+<ul class="nav nav-tabs" role="tablist">
+        <li class="active">
+            <a href="#info" role="tab" id="info-tab" data-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li >
+            <a href="#source" role="tab" id="source-tab" data-toggle="tab" data-link="source">Source</a>
+        </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="c-info">
+        <p class="comment">
+            <h3>File</h3>
+        </p>
+        <p class="comment">
+            <code>src/app/demo/components/uikit/table/tabledemo.component.ts</code>
+        </p>
+
+
+
+
+
+
+            <section>
+    <h3 id="inputs">Indexable</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <code>[key: string]:        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="9" class="link-to-prism">src/app/demo/components/uikit/table/tabledemo.component.ts:9</a></div>
+                            </td>
+                        </tr>
+            </tbody>
+        </table>
+</section>
+
+    </div>
+
+
+    <div class="tab-pane fade  tab-source-code" id="c-source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Component, OnInit, ViewChild, ElementRef } from &#x27;@angular/core&#x27;;
+import { Customer, Representative } from &#x27;src/app/demo/api/customer&#x27;;
+import { CustomerService } from &#x27;src/app/demo/service/customer.service&#x27;;
+import { Product } from &#x27;src/app/demo/api/product&#x27;;
+import { ProductService } from &#x27;src/app/demo/service/product.service&#x27;;
+import { Table } from &#x27;primeng/table&#x27;;
+import { MessageService, ConfirmationService } from &#x27;primeng/api&#x27;;
+
+interface expandedRows {
+    [key: string]: boolean;
+}
+
+@Component({
+    templateUrl: &#x27;./tabledemo.component.html&#x27;,
+    providers: [MessageService, ConfirmationService]
+})
+export class TableDemoComponent implements OnInit {
+
+    customers1: Customer[] &#x3D; [];
+
+    customers2: Customer[] &#x3D; [];
+
+    customers3: Customer[] &#x3D; [];
+
+    selectedCustomers1: Customer[] &#x3D; [];
+
+    selectedCustomer: Customer &#x3D; {};
+
+    representatives: Representative[] &#x3D; [];
+
+    statuses: any[] &#x3D; [];
+
+    products: Product[] &#x3D; [];
+
+    rowGroupMetadata: any;
+
+    expandedRows: expandedRows &#x3D; {};
+
+    activityValues: number[] &#x3D; [0, 100];
+
+    isExpanded: boolean &#x3D; false;
+
+    idFrozen: boolean &#x3D; false;
+
+    loading: boolean &#x3D; true;
+
+    @ViewChild(&#x27;filter&#x27;) filter!: ElementRef;
+
+    constructor(private customerService: CustomerService, private productService: ProductService) { }
+
+    ngOnInit() {
+        this.customerService.getCustomersLarge().then(customers &#x3D;&gt; {
+            this.customers1 &#x3D; customers;
+            this.loading &#x3D; false;
+
+            // @ts-ignore
+            this.customers1.forEach(customer &#x3D;&gt; customer.date &#x3D; new Date(customer.date));
+        });
+        this.customerService.getCustomersMedium().then(customers &#x3D;&gt; this.customers2 &#x3D; customers);
+        this.customerService.getCustomersLarge().then(customers &#x3D;&gt; this.customers3 &#x3D; customers);
+        this.productService.getProductsWithOrdersSmall().then(data &#x3D;&gt; this.products &#x3D; data);
+
+        this.representatives &#x3D; [
+            { name: &#x27;Amy Elsner&#x27;, image: &#x27;amyelsner.png&#x27; },
+            { name: &#x27;Anna Fali&#x27;, image: &#x27;annafali.png&#x27; },
+            { name: &#x27;Asiya Javayant&#x27;, image: &#x27;asiyajavayant.png&#x27; },
+            { name: &#x27;Bernardo Dominic&#x27;, image: &#x27;bernardodominic.png&#x27; },
+            { name: &#x27;Elwin Sharvill&#x27;, image: &#x27;elwinsharvill.png&#x27; },
+            { name: &#x27;Ioni Bowcher&#x27;, image: &#x27;ionibowcher.png&#x27; },
+            { name: &#x27;Ivan Magalhaes&#x27;, image: &#x27;ivanmagalhaes.png&#x27; },
+            { name: &#x27;Onyama Limba&#x27;, image: &#x27;onyamalimba.png&#x27; },
+            { name: &#x27;Stephen Shaw&#x27;, image: &#x27;stephenshaw.png&#x27; },
+            { name: &#x27;XuXue Feng&#x27;, image: &#x27;xuxuefeng.png&#x27; }
+        ];
+
+        this.statuses &#x3D; [
+            { label: &#x27;Unqualified&#x27;, value: &#x27;unqualified&#x27; },
+            { label: &#x27;Qualified&#x27;, value: &#x27;qualified&#x27; },
+            { label: &#x27;New&#x27;, value: &#x27;new&#x27; },
+            { label: &#x27;Negotiation&#x27;, value: &#x27;negotiation&#x27; },
+            { label: &#x27;Renewal&#x27;, value: &#x27;renewal&#x27; },
+            { label: &#x27;Proposal&#x27;, value: &#x27;proposal&#x27; }
+        ];
+    }
+
+    onSort() {
+        this.updateRowGroupMetaData();
+    }
+
+    updateRowGroupMetaData() {
+        this.rowGroupMetadata &#x3D; {};
+
+        if (this.customers3) {
+            for (let i &#x3D; 0; i &lt; this.customers3.length; i++) {
+                const rowData &#x3D; this.customers3[i];
+                const representativeName &#x3D; rowData?.representative?.name || &#x27;&#x27;;
+
+                if (i &#x3D;&#x3D;&#x3D; 0) {
+                    this.rowGroupMetadata[representativeName] &#x3D; { index: 0, size: 1 };
+                }
+                else {
+                    const previousRowData &#x3D; this.customers3[i - 1];
+                    const previousRowGroup &#x3D; previousRowData?.representative?.name;
+                    if (representativeName &#x3D;&#x3D;&#x3D; previousRowGroup) {
+                        this.rowGroupMetadata[representativeName].size++;
+                    }
+                    else {
+                        this.rowGroupMetadata[representativeName] &#x3D; { index: i, size: 1 };
+                    }
+                }
+            }
+        }
+    }
+
+    expandAll() {
+        if (!this.isExpanded) {
+            this.products.forEach(product &#x3D;&gt; product &amp;&amp; product.name ? this.expandedRows[product.name] &#x3D; true : &#x27;&#x27;);
+
+        } else {
+            this.expandedRows &#x3D; {};
+        }
+        this.isExpanded &#x3D; !this.isExpanded;
+    }
+
+    formatCurrency(value: number) {
+        return value.toLocaleString(&#x27;en-US&#x27;, { style: &#x27;currency&#x27;, currency: &#x27;USD&#x27; });
+    }
+
+    onGlobalFilter(table: Table, event: Event) {
+        table.filterGlobal((event.target as HTMLInputElement).value, &#x27;contains&#x27;);
+    }
+
+    clear(table: Table) {
+        table.clear();
+        this.filter.nativeElement.value &#x3D; &#x27;&#x27;;
+    }
+    
+}</code></pre>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+          <label class="dark-mode-switch">
+               <input type="checkbox">
+               <span class="slider">
+                    <svg class="slider-icon" viewBox="0 0 24 24" fill="none" height="20" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                    </svg>
+               </span>
+          </label>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'interface';
+            var COMPODOC_CURRENT_PAGE_URL = 'expandedRows.html';
+            var MAX_SEARCH_RESULTS = 15;
+       </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+
+       <script src="../js/menu-wc.js" defer></script>
+       <script nomodule src="../js/menu-wc_es5.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+       <script src="../js/libs/zepto.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>
