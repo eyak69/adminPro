@@ -2,12 +2,14 @@ import { Injectable } from '@angular/core';
 import { Observable, of, map } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { Sucursal } from 'src/app/components/sucursal/interfaces/sucursal'
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class SucursalService {
   private _sucursal!: Sucursal[];
+  private _baseUrl: string = environment.baseUrl;
 
   constructor(private http: HttpClient) { }
 
@@ -19,7 +21,20 @@ export class SucursalService {
   }
 
   listar(): Observable<Sucursal[]> {
-    const url = 'assets/json/sucursales.json'; // Reemplaza 'ruta-del-archivo' con la ubicación real del archivo sucursales.json
+   // const url = 'assets/json/sucursales.json'; // Reemplaza 'ruta-del-archivo' con la ubicación real del archivo sucursales.json
+   //sucursal
+   const url: string = `${this._baseUrl}/sucursal`;
+
+   /*return this.http.get<Usuario>(url).pipe(
+     catchError((error: any) => {
+       console.error('Error al buscar usuario:', error);
+       // Puedes realizar acciones adicionales con el error si es necesario
+       // Por ejemplo, enviar un mensaje de error, realizar un registro, etc.
+       // Luego, puedes devolver un valor por defecto o un Observable vacío
+       // En este ejemplo, devolvemos un Observable vacío utilizando `of()`
+       return of(null);
+     })
+   );*/
     return this.http.get<Sucursal[]>(url).pipe(
       map((response: Sucursal[]) => {
         // Puedes realizar cualquier transformación o manipulación necesaria en los datos

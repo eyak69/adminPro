@@ -37,9 +37,6 @@ export class UsuarioService {
     {
       debugger
       //var newData: Usuario = { ...usuario }; // Copiar el objeto original
-      if (usuario.sucursales) {
-        usuario.sucursales = usuario.sucursales.map(({ name, provinciaId }) => ({ name, provinciaId })); // Modificar el campo "sucursales" eliminando el campo "name"
-      }
       const url: string = `${this._baseUrl}/auth/register`
       return this.http.post(url, usuario);
     }

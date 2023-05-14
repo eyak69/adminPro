@@ -121,7 +121,7 @@ export class RegisterComponent {
   }
 
   submit() { 
-    console.log('graba')
+   
     if (this.miFormulario.valid){
       if (this.isEditar){
 
