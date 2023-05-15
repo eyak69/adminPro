@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
-import { catchError, distinct, map } from 'rxjs/operators';
+import { catchError, distinct, filter, map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { SucursalService } from 'src/app/components/sucursal/services/sucursal.service'
 import { Usuario } from '../interfaces/usuario';
@@ -35,16 +35,19 @@ export class UsuarioService {
 
   grabar(usuario: Usuario): Observable<Usuario> {
     {
-      debugger
+
       //var newData: Usuario = { ...usuario }; // Copiar el objeto original
       const url: string = `${this._baseUrl}/auth/register`
       return this.http.post(url, usuario);
     }
-
   }
 
   buscarSucursal(): Observable<Sucursal[]> {
-    return this.sucursaService.listar();
+    /*Si estás seguro de que el valor nunca será nulo y solo quieres 
+    evitar el error de TypeScript, puedes utilizar el 
+    operador de aserción de tipo (as) para indicar que estás seguro 
+    de que el valor no será nulo:*/
+    return this.sucursaService.listar() as Observable<Sucursal[]>
   }
 
 }

@@ -14,4 +14,4 @@ import { ListarComponent } from './listar/listar.component';
     CommonModule
   ]
 })
-export class SucursalModule { }
+export class ProvinciaModule { }
