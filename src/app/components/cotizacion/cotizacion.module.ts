@@ -3,6 +3,9 @@ import { CommonModule } from '@angular/common';
 import { ListarComponent } from './listar/listar.component';
 import { AgregarComponent } from './agregar/agregar.component';
 import { CotizacionRoutingModule } from './cotizacion-routing.module';
+import { ReactiveFormsModule } from '@angular/forms';
+import { PrimeNgModule } from 'src/app/prime-ng/prime-ng.module';
+import { SharedModule } from '../shared/shared.module';
 
 
 
@@ -13,7 +16,10 @@ import { CotizacionRoutingModule } from './cotizacion-routing.module';
   ],
   imports: [
     CommonModule,
-    CotizacionRoutingModule
+    CotizacionRoutingModule,
+    ReactiveFormsModule,
+    PrimeNgModule,
+    SharedModule 
   ]
 })
 export class CotizacionModule { }

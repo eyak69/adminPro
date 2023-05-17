@@ -1,1 +1,10 @@
-<p>listar works!</p>
+<p-toast></p-toast>
+<p-card>
+    <app-toolbar-group titulo="Moneda" 
+    (actualizarEvent)="actualizarMoneda()" (nuevoEvent)="nuevaMoneda()"></app-toolbar-group>
+    <app-table-group [lista]="monedas" [columnas]="cols" [id]="id" 
+    (editEvent)="editMoneda($event)"
+    (deleteEvent)="deleteMoneda($event)">
+    </app-table-group>
+</p-card>
+<p-confirmDialog [style]="{width: '450px'}"></p-confirmDialog>
