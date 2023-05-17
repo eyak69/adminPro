@@ -54,7 +54,7 @@ export class RegisterComponent {
     //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
     //Add 'implements OnInit' to the class.
     this.isEditar = false
-    this.buscarSucursal();
+    this.buscarSucursales();
     console.log(this.isEditar)
     if (!this.router.url.includes('editar')) {
       this.miFormulario = this.formBuilder.group({
@@ -66,6 +66,7 @@ export class RegisterComponent {
       }, {
         validator: passwordMatchValidator
       });
+      debugger
       this.miFormulario.reset(this.usuario)
       return;
     }
@@ -102,8 +103,8 @@ export class RegisterComponent {
     this._editar = value;
   }
 
-  buscarSucursal() {
-    this.usuarioService.buscarSucursal().
+  buscarSucursales() {
+    this.usuarioService.getSucursales().
       subscribe(sucursal => {
         this.sucursal = sucursal;
         console.log(sucursal);
@@ -112,7 +113,7 @@ export class RegisterComponent {
 
   buscarUsuario() {
     this.activatedRoute.params.pipe(
-      switchMap(({ id }) => this.usuarioService.buscar(id))
+      switchMap(({ id }) => this.usuarioService.getUsuario(id))
     ).subscribe(usuario => {
       this.usuario = usuario;
       this.miFormulario.reset(this.usuario);
@@ -127,7 +128,7 @@ export class RegisterComponent {
 
       }
       else{
-        this.usuarioService.grabar(this.miFormulario.value).subscribe(resp=>{
+        this.usuarioService.addUsuario(this.miFormulario.value).subscribe(resp=>{
           console.log(resp)
         })
       }

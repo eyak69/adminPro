@@ -20,6 +20,8 @@ import { InputSwitchModule } from 'primeng/inputswitch';
 import { CheckboxModule } from 'primeng/checkbox';
 import { MultiSelectModule } from 'primeng/multiselect';
 import { PasswordModule } from 'primeng/password';
+import { DialogModule } from 'primeng/dialog';
+import { DynamicDialogModule } from 'primeng/dynamicdialog';
 
 
 
@@ -45,7 +47,9 @@ import { PasswordModule } from 'primeng/password';
     InputSwitchModule,
     CheckboxModule,
     MultiSelectModule, 
-    PasswordModule
+    PasswordModule,
+    DialogModule,
+    DynamicDialogModule    
   ]
 })
 export class PrimeNgModule { }

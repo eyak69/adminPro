@@ -19,7 +19,7 @@ export class UsuarioService {
   constructor(private http: HttpClient,
     private sucursaService: SucursalService) { }
 
-  buscar(id: number): Observable<Usuario | null> {
+  getUsuario(id: number): Observable<Usuario | null> {
     const url: string = `${this._baseUrl}/user/${id}`;
     return this.http.get<Usuario>(url).pipe(
       catchError((error: any) => {
@@ -33,21 +33,18 @@ export class UsuarioService {
     );
   }
 
-  grabar(usuario: Usuario): Observable<Usuario> {
+  addUsuario(usuario: Usuario): Observable<Usuario> {
     {
-
       //var newData: Usuario = { ...usuario }; // Copiar el objeto original
       const url: string = `${this._baseUrl}/auth/register`
       return this.http.post(url, usuario);
     }
   }
 
-  buscarSucursal(): Observable<Sucursal[]> {
-    /*Si estás seguro de que el valor nunca será nulo y solo quieres 
-    evitar el error de TypeScript, puedes utilizar el 
-    operador de aserción de tipo (as) para indicar que estás seguro 
-    de que el valor no será nulo:*/
-    return this.sucursaService.listar() as Observable<Sucursal[]>
+  getSucursales(): Observable<Sucursal[]> {
+    return this.sucursaService.getSucursales().pipe(
+      filter((data: Sucursal[] | null): data is Sucursal[] => data !== null)
+    );
   }
 
 }

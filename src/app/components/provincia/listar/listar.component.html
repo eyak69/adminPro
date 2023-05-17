@@ -1,1 +1,10 @@
-<p>listar works!</p>
+<p-toast></p-toast>
+<p-card>
+    <app-toolbar-group titulo="Provincias" 
+    (actualizarEvent)="actualizarProvincia()" (nuevoEvent)="nuevaProvincia()"></app-toolbar-group>
+    <app-table-group [lista]="provincias" [columnas]="cols" [id]="id" 
+    (editEvent)="editProvincia($event)"
+    (deleteEvent)="deleteProvincia($event)">
+    </app-table-group>
+</p-card>
+<p-confirmDialog [style]="{width: '450px'}"></p-confirmDialog>

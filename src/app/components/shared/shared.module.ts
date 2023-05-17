@@ -8,6 +8,8 @@ import { TextGroupComponent } from './text-group/text-group.component';
 import { MultiselectGroupComponent } from './multiselect-group/multiselect-group.component';
 import { PasswordGroupComponent } from './password-group/password-group.component';
 import { DropdownGroupComponent } from './dropdown-group/dropdown-group.component';
+import { ToolbarGroupComponent } from './toolbar-group/toolbar-group.component';
+import { TableGroupComponent } from './table-group/table-group.component';
 
 
 
@@ -18,14 +20,18 @@ import { DropdownGroupComponent } from './dropdown-group/dropdown-group.componen
     TextGroupComponent,
     MultiselectGroupComponent,
     PasswordGroupComponent,
-    DropdownGroupComponent
+    DropdownGroupComponent,
+    ToolbarGroupComponent,
+    TableGroupComponent
   ],
   exports:[
     ButtonGroupComponent,
     TextGroupComponent,
     MultiselectGroupComponent,
     PasswordGroupComponent,
-    DropdownGroupComponent
+    DropdownGroupComponent,
+    ToolbarGroupComponent,
+    TableGroupComponent
   ],
   imports: [
     CommonModule,
