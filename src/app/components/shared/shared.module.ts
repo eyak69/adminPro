@@ -10,6 +10,7 @@ import { PasswordGroupComponent } from './password-group/password-group.componen
 import { DropdownGroupComponent } from './dropdown-group/dropdown-group.component';
 import { ToolbarGroupComponent } from './toolbar-group/toolbar-group.component';
 import { TableGroupComponent } from './table-group/table-group.component';
+import { NumberGroupComponent } from './number-group/number-group.component';
 
 
 
@@ -22,7 +23,8 @@ import { TableGroupComponent } from './table-group/table-group.component';
     PasswordGroupComponent,
     DropdownGroupComponent,
     ToolbarGroupComponent,
-    TableGroupComponent
+    TableGroupComponent,
+    NumberGroupComponent
   ],
   exports:[
     ButtonGroupComponent,
@@ -31,7 +33,8 @@ import { TableGroupComponent } from './table-group/table-group.component';
     PasswordGroupComponent,
     DropdownGroupComponent,
     ToolbarGroupComponent,
-    TableGroupComponent
+    TableGroupComponent,
+    NumberGroupComponent
   ],
   imports: [
     CommonModule,

@@ -1,10 +1,14 @@
 <p-toast></p-toast>
 <p-card>
     <app-toolbar-group titulo="Provincias" 
-    (actualizarEvent)="actualizarProvincia()" (nuevoEvent)="nuevaProvincia()"></app-toolbar-group>
+    (actualizarEvent)="actualizarProvincia()" (nuevoEvent)="nuevaProvincia()"
+    ></app-toolbar-group>
     <app-table-group [lista]="provincias" [columnas]="cols" [id]="id" 
+    [pageSize]="10" [totalRecords]="totalRecords"
+    [loading]="loading"
     (editEvent)="editProvincia($event)"
-    (deleteEvent)="deleteProvincia($event)">
+    (deleteEvent)="deleteProvincia($event)"
+    (lazyLoadEvent)="obtenerProvincias($event)">
     </app-table-group>
 </p-card>
 <p-confirmDialog [style]="{width: '450px'}"></p-confirmDialog>

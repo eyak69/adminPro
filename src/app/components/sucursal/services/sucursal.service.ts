@@ -27,6 +27,7 @@ export class SucursalService {
   }
 
   agregar(sucursal: Sucursal): Observable<Sucursal> {
+      console.log(sucursal);
       return this.http.post<Sucursal>(`${this._baseUrl}/sucursal`, sucursal);
   }
 
@@ -39,8 +40,16 @@ export class SucursalService {
     //sucursal
     const url: string = `${this._baseUrl}/sucursal`;
     return this.http.get<Sucursal[]>(url).pipe(
-      filter((data: Sucursal[] | null): data is Sucursal[] => data !== null)
-    );
+      filter((data: Sucursal[] | null): data is Sucursal[] => data !== null),
+      catchError((error: any) => {
+        console.error('Error al buscar sucursal:', error);
+        // Puedes realizar acciones adicionales con el error si es necesario
+        // Por ejemplo, enviar un mensaje de error, realizar un registro, etc.
+        // Luego, puedes devolver un valor por defecto o un Observable vacío
+        // En este ejemplo, devolvemos un Observable vacío utilizando `of()`
+        return of([]);
+      }
+    ));
   }
 
   getSucursal(id: number): Observable<Sucursal | null> {

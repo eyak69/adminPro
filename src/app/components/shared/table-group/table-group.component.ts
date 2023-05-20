@@ -11,8 +11,14 @@ export class TableGroupComponent {
   @Input() public lista!: any[];
   @Input() public columnas!: Columnas[];
   @Input() public id!: string;
+  @Input() public pageSize!:number;
+  @Input() public totalRecords!:number
+  @Input() public loading!:boolean
   @Output() editEvent: EventEmitter<any> = new EventEmitter<any>();
   @Output() deleteEvent: EventEmitter<any> = new EventEmitter<any>();
+  @Output() pageEvent: EventEmitter<any> = new EventEmitter<any>();
+  @Output() lazyLoadEvent: EventEmitter<any> = new EventEmitter<any>();
+
 
   ngOnInit(): void {
     //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
@@ -47,5 +53,15 @@ export class TableGroupComponent {
   onDeleteProduct(id: any) {
     console.log(id);
     this.deleteEvent.emit(id);
+  }
+
+  onPageChange(event: any){
+     this.pageEvent.emit(event);
+     console.log(event);
+  }
+
+  onLazyLoad(event: any){
+    this.lazyLoadEvent.emit(event);
+    console.log(event);
   }
 }

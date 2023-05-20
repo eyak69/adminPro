@@ -1,7 +1,8 @@
 interface Moneda {
-    id: number;
+    id?: number;
     nombre: string;
     codigo: string;
+    locale: string;
   }
 
 export { Moneda }

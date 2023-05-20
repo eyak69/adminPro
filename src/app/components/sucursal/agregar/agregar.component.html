@@ -1,9 +1,9 @@
 <p-toast></p-toast>
 <div class="card">
-    <h3>{{isEditar?'Editar Usuario':'Nuevo Usuario'}}</h3>
+    <h3>{{isEditar?'Editar Usuario':'Nuevo Sucursal'}}</h3>
     <form autocomplete="off" [formGroup]="miFormulario" (ngSubmit)="submit()">
         <div class="card p-fluid">
-            <app-text-group labelText="Nombre de la Sucursal" inputType="text" controlName="name">
+            <app-text-group labelText="Nombre de la Sucursal" inputType="text" controlName="nombre">
             </app-text-group>
             <app-dropdown-group controlName="provincia" optionLabel="nombre" [lista]="provincias"
                 placeholder="Elija la Provincia" labelText="Provincia"></app-dropdown-group>

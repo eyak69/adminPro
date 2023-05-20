@@ -6,7 +6,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Provincia } from '../../provincia/interfaces/provincia';
 import { Router } from '@angular/router';
 import { Sucursal } from '../interfaces/sucursal';
-import { Subscription } from 'rxjs';
+import { Observable, Subscription, catchError, throwError } from 'rxjs';
 import { MessageService } from 'primeng/api';
 
 @Component({
@@ -18,22 +18,20 @@ import { MessageService } from 'primeng/api';
 })
 export class AgregarComponent {
   private _isEditar: boolean = false;
+  public miFormulario!: FormGroup;
+
   private _sucursal!: Sucursal | null;
-  sucursalDialog: boolean = true;
-
-
   private _provincias!: Provincia[];
+  private _sucursalSubscription!: Subscription;
 
-  private _provinciaSubscription!: Subscription;
 
-  miFormulario!: FormGroup;
 
   constructor(private provinciaService: ProvinciaService,
     private sucursalService: SucursalService,
+    private messageService: MessageService,
     private activatedRoute: ActivatedRoute,
     private router: Router,
     private formBuilder: FormBuilder) {
-
   }
 
   ngOnInit(): void {
@@ -44,8 +42,8 @@ export class AgregarComponent {
     this.buscarProvincias();
 
     this.miFormulario = this.formBuilder.group({
-      id:[''],
-      name: ['', Validators.required],
+      id: [''],
+      nombre: ['', Validators.required],
       provincia: new FormControl<Provincia[] | null>(null, Validators.required)
     });
 
@@ -57,7 +55,8 @@ export class AgregarComponent {
     this.isEditar = true
     this.activatedRoute.params.subscribe(params => {
       const id = params['id'];
-      this.sucursalService.getSucursal(id).subscribe(sucursal => {
+      this._sucursalSubscription = this.sucursalService.getSucursal(id).subscribe(sucursal => {
+        console.log(sucursal);
         this.miFormulario.reset(sucursal);
         this._sucursal = sucursal;
       });
@@ -78,7 +77,7 @@ export class AgregarComponent {
   }
 
   buscarProvincias() {
-    this.provinciaService.getProvincias().subscribe({
+    this._sucursalSubscription = this.provinciaService.getProvincias(1,10).subscribe({
       next: (provincias: Provincia[]) => {
         // Aquí tienes acceso a los datos de las provincias como un array de objetos Provincia[]
         console.log(provincias);
@@ -99,18 +98,44 @@ export class AgregarComponent {
   }
 
   submit() {
-    if (this.isEditar) {
-      this.sucursalService.editar(this.miFormulario.value).subscribe(sucursal => {
-        this.router.navigateByUrl('/sucursal');
-      });
+    let operation: Observable<any>;
 
+    if (this.isEditar) {
+      operation = this.sucursalService.editar(this.miFormulario.value);
+    } else {
+      operation = this.sucursalService.agregar(this.miFormulario.value);
     }
-    else {
-      this.sucursalService.agregar(this.miFormulario.value).subscribe(sucursal => {
-        this.router.navigateByUrl('/sucursal');
-      });
+
+    this._sucursalSubscription = operation.pipe(
+      catchError((error) => this.handleError('Error al ' + (this.isEditar ? 'editar' : 'agregar') + ' la Sucursal:', error))
+    ).subscribe((sucursal) => {
+      this.handleSuccess('Sucursal ' + (this.isEditar ? 'editada' : 'agregada') + ' correctamente');
+    });
+  }
+
+  private handleSuccess(successMessage: string) {
+    console.log(successMessage);
+    this.messageService.add({
+      severity: 'success',
+      summary: 'Éxito',
+      detail: successMessage,
+      life: 3000
+    });
+    this.router.navigateByUrl('/sucursal');
+  }
+
+  private handleError(errorMessage: string, error: any): Observable<never> {
+    if (error.error && error.error.message) {
+      errorMessage = error.error.message;
     }
-//    this.router.navigateByUrl('/sucursal');
+    console.error(errorMessage, error);
+    this.messageService.add({
+      severity: 'error',
+      summary: 'Error',
+      detail: errorMessage,
+      life: 3000
+    });
+    return throwError(() => error);
   }
 
   cancelar() {

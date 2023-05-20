@@ -1,6 +1,14 @@
 interface Provincia {
     id?: number;
-    nombre?: string;
+    nombre: string;
 }
 
-export { Provincia }  ;
+interface ProvinciaResponse {
+    data: Provincia[];
+    perPage: number;
+    totalRecords: number;
+    next: number;
+    previous: number;
+  }
+
+export { Provincia, ProvinciaResponse }  ;

@@ -26,7 +26,7 @@ export class ListarComponent {
   ngOnInit(): void {
     this.obtenerSucursales();
     this.cols = [
-      { campo: 'name', nombre: 'Nombre' },
+      { campo: 'nombre', nombre: 'Nombre' },
       { campo: 'provincia.nombre', nombre: 'Provincia' }
     ];
   }
