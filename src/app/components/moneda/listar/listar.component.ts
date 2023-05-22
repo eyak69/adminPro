@@ -3,7 +3,7 @@ import { Moneda } from '../interfaces/moneda.interface'
 import { MonedaService } from '../services/moneda.service';
 import { Columnas } from '../../shared/table-group/table-columns';
 import { Router } from '@angular/router';
-import { MessageService, ConfirmationService } from 'primeng/api';
+import { MessageService, ConfirmationService, LazyLoadEvent } from 'primeng/api';
 import { catchError, tap, throwError } from 'rxjs';
 
 @Component({
@@ -18,6 +18,11 @@ export class ListarComponent {
   public monedas: Moneda[] = [];
   public cols!: Columnas[];
   public id: string = "id";
+
+  totalRecords!: number;
+  loading: boolean = true;
+  pageSize: number = 10;
+
 
   constructor(private monedaService: MonedaService,
     private router: Router,
@@ -37,15 +42,15 @@ export class ListarComponent {
     this.router.navigateByUrl(`/moneda/editar/${id}`);
     // Aquí puedes realizar las acciones necesarias para editar la moneda
   }
-  
+
   actualizarMoneda() {
     this.obtenerMonedas();
   }
-  
+
   nuevaMoneda() {
     this.router.navigateByUrl(`/moneda/agregar`);
   }
-  
+
   deleteMoneda(id: any) {
     this.confirmationService.confirm(
       {
@@ -60,6 +65,9 @@ export class ListarComponent {
             })
           ).subscribe({
             next: () => {
+
+            },
+            complete: () => {
               this.messageService.add({
                 severity: 'success',
                 summary: 'Éxito',
@@ -84,16 +92,21 @@ export class ListarComponent {
         }
       });
   }
-  
-  obtenerMonedas() {
-    this.monedaService.getMonedas().pipe(
+
+  obtenerMonedas(event?: LazyLoadEvent) {
+    this.loading = true;
+    this.monedaService.getMonedasLazy(event).pipe(
       catchError((error) => {
         console.error('Error al obtener las Monedas:', error);
         return throwError(() => error); // Propaga el error al método que llama
       })
     ).subscribe({
-      next: (monedas) => {
-        this.monedas = monedas;
+      next: (response) => {
+        this.monedas = response.data;
+        this.totalRecords = response.totalRecords;
+      },
+      complete: () => {
+        this.loading = false;
       },
       error: (error) => {
         let errorMessage = 'Ocurrió un error al obtener las Monedas';
@@ -106,7 +119,7 @@ export class ListarComponent {
           detail: errorMessage,
           life: 3000
         });
-      },
+      }
     });
   }
 }

@@ -6,5 +6,13 @@ interface Sucursal {
     provincia: Provincia
 }
 
-export { Sucursal }  ;
+interface SucursalResponse {
+    data: Sucursal[];
+    perPage: number;
+    totalRecords: number;
+    next: number;
+    previous: number;
+  }
+
+export { Sucursal, SucursalResponse }  ;
 

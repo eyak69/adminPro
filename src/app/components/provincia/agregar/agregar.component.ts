@@ -14,7 +14,7 @@ import { MessageService } from 'primeng/api';
 })
 export class AgregarComponent {
   private _isEditar: boolean = false;
-  private _provincia!: Provincia;
+  private _provincia!: Provincia | null;
   miFormulario!: FormGroup;
   private _provinciaSubscription!: Subscription;
 
@@ -28,26 +28,9 @@ export class AgregarComponent {
   ngOnInit(): void {
     //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
     //Add 'implements OnInit' to the class.
-
-    this._provincia = { nombre: '' };
-    this.miFormulario = this.formBuilder.group({
-      id: [''],
-      nombre: ['', Validators.required]
-    });
-
-    if (!this.router.url.includes('editar')) {
-      this.miFormulario.reset(this.provincia)
-      return
-    }
-    this.isEditar = true
-    this.activatedRoute.params.subscribe(params => {
-      const id = params['id'];
-      this._provinciaSubscription = this.provinciaService.getProvincia(id).subscribe(provincia => {
-        console.log(provincia);
-        this.miFormulario.reset(provincia);
-        
-      });
-    });
+    this.setForm();
+    this.starForm();
+   
   }
 
   public get isEditar(): boolean {
@@ -56,10 +39,10 @@ export class AgregarComponent {
   public set isEditar(value: boolean) {
     this._isEditar = value;
   }
-  public get provincia(): Provincia {
+  public get provincia(): Provincia | null{
     return this._provincia;
   }
-  public set provincia(value: Provincia) {
+  public set provincia(value: Provincia | null) {
     this._provincia = value;
   }
 
@@ -113,6 +96,44 @@ export class AgregarComponent {
 
   cancelar() {
     this.router.navigateByUrl('/provincia');
+  }
+
+
+  setForm() {
+    this.miFormulario = this.formBuilder.group({
+      id: [''],
+      nombre: ['', Validators.required],
+      valor: ['']
+    })
+  }
+
+  starForm() {
+    this.isEditar = false
+    if (this.router.url.includes('editar')) {
+      this.isEditar = true
+      this.activatedRoute.params.subscribe(params => {
+        const id = params['id'];
+        this.buscarProvincia(id)
+      })
+    }
+  }
+
+  buscarProvincia(id: number) {
+    this._provinciaSubscription = this.provinciaService.getProvincia(id).subscribe(
+      {
+        next: (provincia: Provincia | null) => {
+          console.log(provincia);
+          this.provincia = provincia;
+        },
+        complete: () => {
+          console.log('Proceso de obtención de provincia completado');
+          this.miFormulario.reset(this.provincia);
+        },
+        error: (error: any) => {
+          // Manejar el error en caso de que ocurra
+          console.error(error);
+        }
+      });
   }
 
 }

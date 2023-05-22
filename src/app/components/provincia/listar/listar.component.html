@@ -4,10 +4,10 @@
     (actualizarEvent)="actualizarProvincia()" (nuevoEvent)="nuevaProvincia()"
     ></app-toolbar-group>
     <app-table-group [lista]="provincias" [columnas]="cols" [id]="id" 
-    [pageSize]="10" [totalRecords]="totalRecords"
-    [loading]="loading"
     (editEvent)="editProvincia($event)"
     (deleteEvent)="deleteProvincia($event)"
+    [pageSize]="10" [totalRecords]="totalRecords"
+    [loading]="loading"
     (lazyLoadEvent)="obtenerProvincias($event)">
     </app-table-group>
 </p-card>

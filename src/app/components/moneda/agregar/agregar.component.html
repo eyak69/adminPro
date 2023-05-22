@@ -5,18 +5,7 @@
     <div class="card p-fluid">
       <app-text-group labelText="Nombre de la Moneda" inputType="text" controlName="nombre"></app-text-group>
       <app-text-group labelText="Código de la Moneda" inputType="text" controlName="codigo"></app-text-group>
-      <app-text-group labelText="Locale Moneda" inputType="text" controlName="locale"></app-text-group>
-      
-      <!--
-      <app-number-group labelText="Valor Moneda" 
-      controlName="valor" 
-      inputId="currency-us" 
-      mode="currency" 
-      currency="USD" 
-      locale="en-US">
-      </app-number-group>
-      -->
-      
+      <!-- <app-text-group labelText="Locale Moneda" inputType="text" controlName="locale"></app-text-group> -->
     </div>
     <app-button-group [formGroup]="miFormulario" (cancelarEvent)="cancelar()"></app-button-group>
   </form>

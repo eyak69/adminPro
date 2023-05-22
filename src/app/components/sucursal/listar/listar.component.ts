@@ -3,8 +3,8 @@ import { Sucursal } from '../interfaces/sucursal';
 import { SucursalService } from '../services/sucursal.service';
 import { Columnas } from '../../shared/table-group/table-columns';
 import { Router } from '@angular/router';
-import { MessageService, ConfirmationService } from 'primeng/api';
-import { catchError, tap } from 'rxjs';
+import { MessageService, ConfirmationService, LazyLoadEvent } from 'primeng/api';
+import { catchError, tap, throwError } from 'rxjs';
 
 
 @Component({
@@ -17,6 +17,10 @@ export class ListarComponent {
   public sucursales: Sucursal[] = [];
   public cols!: Columnas[];
   public id: string = "id";
+
+  totalRecords!: number;
+  loading: boolean = true;
+  pageSize: number = 10;
 
   constructor(private sucursalService: SucursalService,
     private router: Router,
@@ -53,39 +57,71 @@ export class ListarComponent {
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
         console.log(id);
-        this.sucursalService.borrar(id)
-          .pipe(
-            tap(resp => {
-              if (resp) {
-                this.messageService.add({
-                  severity: 'success',
-                  summary: 'Éxito',
-                  detail: 'Sucursal borrada',
-                  life: 3000
-                });
-                this.obtenerSucursales(); // Actualizar la lista después de borrar
-              }
-            }),
-            catchError(error => {
-              console.error('Error al borrar la sucursal:', error);
-              this.messageService.add({
-                severity: 'error',
-                summary: 'Error',
-                detail: 'Error al borrar la sucursal',
-                life: 3000
-              });
-              throw error;
-            })
-          )
-          .subscribe();
+        this.sucursalService.borrar(id).pipe(
+          catchError((error) => {
+            console.error('Error al borrar la Sucursal:', error);
+            return throwError(() => error); // Propaga el error al método que llama
+          })
+        ).subscribe({
+          next: () => {
+          },
+          complete: () => {
+            this.messageService.add({
+              severity: 'success',
+              summary: 'Éxito',
+              detail: 'Sucursal borrada',
+              life: 3000
+            });
+            this.obtenerSucursales(); // Actualizar la lista después de borrar
+          },
+          error: (error) => {
+            let errorMessage = 'Ocurrió un error al borrar la Sucursal';
+            if (error.error && error.error.message) {
+              errorMessage = error.error.message;
+            }
+            this.messageService.add({
+              severity: 'error',
+              summary: 'Error',
+              detail: errorMessage,
+              life: 3000
+            });
+          }
+        });
       }
     });
   }
 
-  obtenerSucursales() {
-    this.sucursalService.getSucursales().subscribe((sucursales) => {
-      console.log(sucursales);
-      this.sucursales = sucursales;
+  obtenerSucursales(event?: LazyLoadEvent) {
+    this.loading = true;
+    /*const page = event?.first ? event.first / (event.rows ?? 10) + 1 : 1;
+    const pageSize = event?.rows ?? 10;*/
+
+    this.sucursalService.getSucursalesLazy(event).pipe(
+      catchError((error) => {
+        console.error('Error al obtener las sucursales:', error);
+        return throwError(() => error); // Propaga el error al método que llama
+      })
+    ).subscribe({
+      next: (response) => {
+        this.sucursales = response.data;
+        this.totalRecords = response.totalRecords;
+      },
+      complete: () => {
+        this.loading = false;
+      },
+      error: (error) => {
+        let errorMessage = 'Ocurrió un error al obtener las sucursales';
+        if (error.error && error.error.message) {
+          errorMessage = error.error.message;
+        }
+        this.messageService.add({
+          severity: 'error',
+          summary: 'Error',
+          detail: errorMessage,
+          life: 3000
+        });
+      }
     });
   }
+
 }

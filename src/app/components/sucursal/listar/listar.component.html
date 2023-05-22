@@ -4,7 +4,10 @@
     (actualizarEvent)="actualizarSucursal()" (nuevoEvent)="nuevaSucursal()"></app-toolbar-group>
     <app-table-group [lista]="sucursales" [columnas]="cols" [id]="id" 
     (editEvent)="editSucursal($event)"
-    (deleteEvent)="deleteSucursal($event)">
+    (deleteEvent)="deleteSucursal($event)"
+    [pageSize]="10" [totalRecords]="totalRecords"
+    [loading]="loading"
+    (lazyLoadEvent)="obtenerSucursales($event)">
     </app-table-group>
 </p-card>
 <p-confirmDialog [style]="{width: '450px'}"></p-confirmDialog>

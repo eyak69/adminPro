@@ -15,7 +15,7 @@ import { Moneda } from '../interfaces/moneda.interface'
 })
 export class AgregarComponent {
   private _isEditar: boolean = false;
-  private _moneda!: Moneda;
+  private _moneda!: Moneda | null;
   miFormulario!: FormGroup;
   private _monedaSubscription!: Subscription;
 
@@ -28,27 +28,8 @@ export class AgregarComponent {
   ) {}
 
   ngOnInit(): void {
-    this._moneda = { nombre: '', codigo: '', locale: '' };
-    this.miFormulario = this.formBuilder.group({
-      id: [''],
-      nombre: ['', Validators.required],
-      codigo: ['', Validators.required],
-      locale: ['', Validators.required]
-    });
-
-    if (!this.router.url.includes('editar')) {
-      //this.miFormulario.reset(this.moneda);
-      return;
-    }
-
-    this.isEditar = true;
-    this.activatedRoute.params.subscribe(params => {
-      const id = params['id'];
-      this._monedaSubscription = this.monedaService.getMoneda(id).subscribe(moneda => {
-        console.log(moneda);
-        this.miFormulario.reset(moneda);
-      });
-    });
+    this.setForm();
+    this.starForm();
   }
 
   public get isEditar(): boolean {
@@ -57,10 +38,10 @@ export class AgregarComponent {
   public set isEditar(value: boolean) {
     this._isEditar = value;
   }
-  public get moneda(): Moneda {
+  public get moneda(): Moneda | null {
     return this._moneda;
   }
-  public set moneda(value: Moneda) {
+  public set moneda(value: Moneda | null) {
     this._moneda = value;
   }
 
@@ -68,7 +49,8 @@ export class AgregarComponent {
     let operation: Observable<any>;
     const monedaFormValue = { ...this.miFormulario.value };
     monedaFormValue.codigo = monedaFormValue.codigo.toUpperCase(); // Convertir a mayúsculas
-  
+    this.miFormulario.setValue(monedaFormValue);
+    
     if (this.isEditar) {
       operation = this.monedaService.editar(this.miFormulario.value);
     } else {
@@ -115,6 +97,44 @@ export class AgregarComponent {
 
   cancelar() {
     this.router.navigateByUrl('/moneda');
+  }
+
+  setForm() {
+    this.miFormulario = this.formBuilder.group({
+      id: [''],
+      nombre: ['', Validators.required],
+      codigo: ['', Validators.required],
+      locale: ['']
+    })
+  }
+
+  starForm() {
+    this.isEditar = false
+    if (this.router.url.includes('editar')) {
+      this.isEditar = true
+      this.activatedRoute.params.subscribe(params => {
+        const id = params['id'];
+        this.buscarMoneda(id)
+      })
+    }
+  }
+
+  buscarMoneda(id: number) {
+    this._monedaSubscription = this.monedaService.getMoneda(id).subscribe(
+      {
+        next: (moneda: Moneda | null) => {
+          console.log(moneda);
+          this.moneda = moneda;
+        },
+        complete: () => {
+          console.log('Proceso de obtención de provincia completado');
+          this.miFormulario.reset(this.moneda);
+        },
+        error: (error: any) => {
+          // Manejar el error en caso de que ocurra
+          console.error(error);
+        }
+      });
   }
 }
 

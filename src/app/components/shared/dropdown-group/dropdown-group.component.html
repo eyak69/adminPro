@@ -4,6 +4,7 @@
         <p-dropdown formControlName="{{ controlName }}" [options]="lista" optionLabel="{{optionLabel}}"
             placeholder="{{ placeholder }}" p-dropdown-clearable>
         </p-dropdown>
+       <!-- <p-dropdown formControlName="{{ controlName }}" [options]="lista" optionLabel="{{optionLabel}}"></p-dropdown> -->
     </div>
     <div [style.color]="'red'" [style.margin-top.px]="5" *ngIf="control!.hasError('required')">
         No puede estar vacio

@@ -1,9 +1,14 @@
 <ng-container [formGroup]="miFormulario">
     <div class="field">
         <label for="{{ controlName }}">{{ labelText }}</label>
+        <!--
         <p-inputNumber inputId="{{ inputId }}" mode="{{ mode }}" currency="{{ currency }}" locale="{{ locale }}"
-            formControlName="{{ controlName }}">
+            formControlName="{{ controlName }}" (keydown)="replaceDecimalSeparator($event)">
         </p-inputNumber>
+        -->
+
+        <p-inputNumber formControlName="{{ controlName }}" inputId="locale-user" [minFractionDigits]="2"></p-inputNumber>
+
         <div [style.color]="'red'" [style.margin-top.px]="5" *ngIf="control!.hasError('required')">
             No puede estar vacio
         </div>

@@ -1,6 +1,5 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
-import {FormGroup, FormControl, ControlContainer, AbstractControl } from '@angular/forms';
-
+import { Component, Input, Output, EventEmitter, HostListener, Host, Optional } from '@angular/core';
+import { FormGroup,  ControlContainer, AbstractControl, NgControl } from '@angular/forms';
 
 @Component({
   selector: 'app-number-group',
@@ -8,6 +7,7 @@ import {FormGroup, FormControl, ControlContainer, AbstractControl } from '@angul
   styles: [
   ]
 })
+
 export class NumberGroupComponent {
   @Input() public controlName!: string;
   @Input() labelText!: string;
@@ -18,20 +18,20 @@ export class NumberGroupComponent {
   @Output() textChanged = new EventEmitter<any>();
 
   miFormulario!: FormGroup;
-  control!:AbstractControl| null;
+  control!: AbstractControl | null;
 
-  constructor(public controlContainer: ControlContainer) {}
+  constructor(public controlContainer: ControlContainer) { }
 
   //control!: FormControl;
   ngOnInit() {
     // Fetch Form control (validator) from FormGroup parent
     this.miFormulario = <FormGroup>this.controlContainer.control;
     this.control = this.miFormulario.get(this.controlName);
-  }  
-
-  onTextChanged(event: any) { 
-    const text = event.target.value;
-    console.log('onTextChanged:' + text)
-    this.textChanged.emit(event);
   }
+
+  onTextChanged(event: any) {
+    const text = event.target.value;
+    console.log('onTextChanged:' + text);
+    this.textChanged.emit(event);
+  } 
 }
