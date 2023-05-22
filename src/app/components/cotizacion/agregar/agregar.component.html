@@ -1,1 +1,15 @@
-<p>agregar works!</p>
+<p-toast></p-toast>
+<div class="card">
+    <h3>{{isEditar?'Editar Cotización':'Nuevo Cotización'}}</h3>
+    <form autocomplete="off" [formGroup]="miFormulario" (ngSubmit)="submit()">
+        <div class="card p-fluid">
+
+            <app-dropdown-group controlName="monedas" optionLabel="nombre" [lista]="monedas"
+            placeholder="Elija la Moneda" labelText="Moneda"></app-dropdown-group>
+
+            <app-number-group labelText="Cotización" controlName="valor"></app-number-group>
+
+        </div>
+        <app-button-group [formGroup]="miFormulario" (cancelarEvent)="cancelar()"></app-button-group>
+    </form>
+</div>

@@ -1,19 +1,22 @@
-import { Component, EventEmitter, Input, Output, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Input, Output, SimpleChanges, TemplateRef, ViewChild } from '@angular/core';
 import { Columnas } from './table-columns';
+import { NumberFormatPipe } from '../pipes/number-format.pipe';
 
 
 @Component({
   selector: 'app-table-group',
   templateUrl: './table-group.component.html',
-  styles: [],
+  styles: []
 })
 export class TableGroupComponent {
+  @ViewChild('numberFormatTemplate') numberFormatTemplate!: TemplateRef<any>;
+
   @Input() public lista!: any[];
   @Input() public columnas!: Columnas[];
   @Input() public id!: string;
-  @Input() public pageSize!:number;
-  @Input() public totalRecords!:number
-  @Input() public loading!:boolean
+  @Input() public pageSize!: number;
+  @Input() public totalRecords!: number
+  @Input() public loading!: boolean
   @Output() editEvent: EventEmitter<any> = new EventEmitter<any>();
   @Output() deleteEvent: EventEmitter<any> = new EventEmitter<any>();
   @Output() pageEvent: EventEmitter<any> = new EventEmitter<any>();
@@ -55,13 +58,25 @@ export class TableGroupComponent {
     this.deleteEvent.emit(id);
   }
 
-  onPageChange(event: any){
-     this.pageEvent.emit(event);
-     console.log(event);
+  onPageChange(event: any) {
+    this.pageEvent.emit(event);
+    console.log(event);
   }
 
-  onLazyLoad(event: any){
+  onLazyLoad(event: any) {
     this.lazyLoadEvent.emit(event);
     console.log(event);
   }
+
+  // Obtén las referencias a los templates
+  getDirectiveTemplate(directiva: string, value: any) {
+    switch (directiva) {
+      case 'appNumberFormat':
+        return this.numberFormatTemplate;
+      // Agrega más casos para otras directivas si es necesario
+      default:
+        return null;
+    }
+  }
+
 }

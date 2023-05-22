@@ -103,7 +103,6 @@ export class AgregarComponent {
     this.miFormulario = this.formBuilder.group({
       id: [''],
       nombre: ['', Validators.required],
-      valor: ['']
     })
   }
 

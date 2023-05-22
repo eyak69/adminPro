@@ -11,6 +11,7 @@ import { DropdownGroupComponent } from './dropdown-group/dropdown-group.componen
 import { ToolbarGroupComponent } from './toolbar-group/toolbar-group.component';
 import { TableGroupComponent } from './table-group/table-group.component';
 import { NumberGroupComponent } from './number-group/number-group.component';
+import { NumberFormatPipe } from './pipes/number-format.pipe';
 
 
 
@@ -24,7 +25,8 @@ import { NumberGroupComponent } from './number-group/number-group.component';
     DropdownGroupComponent,
     ToolbarGroupComponent,
     TableGroupComponent,
-    NumberGroupComponent
+    NumberGroupComponent,
+    NumberFormatPipe
   ],
   exports:[
     ButtonGroupComponent,
@@ -34,7 +36,8 @@ import { NumberGroupComponent } from './number-group/number-group.component';
     DropdownGroupComponent,
     ToolbarGroupComponent,
     TableGroupComponent,
-    NumberGroupComponent
+    NumberGroupComponent,
+    NumberFormatPipe
   ],
   imports: [
     CommonModule,

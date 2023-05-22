@@ -21,15 +21,21 @@
         <ng-template pTemplate="body" let-rowData let-columns="columns">
             <tr>
                 <td *ngFor="let col of columns">
-                    {{ getPropertyValue(rowData, col.campo) }}
+                    
+                    <ng-container *ngIf="!col.pipe">
+                        <p>{{ getPropertyValue(rowData, col.campo)}}</p>
+                    </ng-container>
+                    <ng-container *ngIf="col.pipe">
+                        <p>{{ getPropertyValue(rowData, col.campo) | numberFormat }}</p>
+                    </ng-container>
                 </td>
+                
                 <td>
                     <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2"
                         (click)="onEditProduct(getPropertyValue(rowData, id))"></button>
                     <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning"
                         (click)="onDeleteProduct(getPropertyValue(rowData, id))"></button>
-                </td>
-
+                </td>  
             </tr>
         </ng-template>
         <ng-template pTemplate="emptymessage">

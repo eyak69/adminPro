@@ -23,6 +23,10 @@ export class AppMenuComponent implements OnInit {
             {
                 label: 'UI Components',
                 items: [
+                    { label: 'Sucursales', icon: 'pi pi-fw pi-circle', routerLink: ['/sucursal'] },
+                    { label: 'Provincias', icon: 'pi pi-fw pi-circle', routerLink: ['/provincia'] },
+                    { label: 'Moneda', icon: 'pi pi-fw pi-circle', routerLink: ['/moneda'] },
+                    { label: 'Cotizacion', icon: 'pi pi-fw pi-circle', routerLink: ['/cotizacion'] },
                     { label: 'Form Layout', icon: 'pi pi-fw pi-id-card', routerLink: ['/uikit/formlayout'] },
                     { label: 'Input', icon: 'pi pi-fw pi-check-square', routerLink: ['/uikit/input'] },
                     { label: 'Float Label', icon: 'pi pi-fw pi-bookmark', routerLink: ['/uikit/floatlabel'] },
@@ -40,10 +44,7 @@ export class AppMenuComponent implements OnInit {
                     { label: 'Chart', icon: 'pi pi-fw pi-chart-bar', routerLink: ['/uikit/charts'] },
                     { label: 'Misc', icon: 'pi pi-fw pi-circle', routerLink: ['/uikit/misc'] },
                     { label: 'Usuario', icon: 'pi pi-fw pi-circle', routerLink: ['/usuario/agregar'] },
-                    { label: 'Sucursales', icon: 'pi pi-fw pi-circle', routerLink: ['/sucursal'] },
-                    { label: 'Provincias', icon: 'pi pi-fw pi-circle', routerLink: ['/provincia'] },
-                    { label: 'Moneda', icon: 'pi pi-fw pi-circle', routerLink: ['/moneda'] },
-                    { label: 'Cotizacion', icon: 'pi pi-fw pi-circle', routerLink: ['/cotizacion'] }
+          
                 ]
             },
             {

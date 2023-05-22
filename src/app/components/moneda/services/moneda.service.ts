@@ -50,6 +50,19 @@ export class MonedaService {
     );
   }
 
+  getMonedas(): Observable<Moneda[]> {
+    const page = 1;
+    const pageSize = 1000
+    const url: string = `${this._baseUrl}/moneda?page=${page}&pageSize=${pageSize}`;
+    return this.http.get<MonedaResponse>(url).pipe(
+      map(response => response.data),
+      catchError((error: any) => {
+        console.error('Error al buscar moneda:', error);
+        return of([]);
+      })
+    );
+  }
+
   getMonedasLazy(event?: LazyLoadEvent): Observable<MonedaResponse> {
     const first = event?.first ?? 0;
     const rows = event?.rows ?? 10;
