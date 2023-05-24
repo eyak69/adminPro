@@ -4,8 +4,11 @@
     <form autocomplete="off" [formGroup]="miFormulario" (ngSubmit)="submit()">
         <div class="card p-fluid">
 
-            <app-dropdown-group controlName="monedas" optionLabel="nombre" [lista]="monedas"
+            <app-dropdown-group controlName="moneda" optionLabel="nombre" [lista]="monedas"
             placeholder="Elija la Moneda" labelText="Moneda"></app-dropdown-group>
+
+            <app-dropdown-group controlName="tipo" optionLabel="nombre" [lista]="tipos"
+            placeholder="Elija el tipo" labelText="Tipo"></app-dropdown-group>
 
             <app-number-group labelText="Cotización" controlName="valor"></app-number-group>
 

@@ -5,6 +5,10 @@ import { Columnas } from '../../shared/table-group/table-columns';
 import { Router } from '@angular/router';
 import { MessageService, ConfirmationService, LazyLoadEvent } from 'primeng/api';
 import { catchError, tap, throwError } from 'rxjs';
+import { NumberFormatPipe } from '../../shared/pipes/number-format.pipe'
+import { PercentPipe } from '@angular/common';
+import { DecimalPipe } from '@angular/common';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-listar',
@@ -22,19 +26,23 @@ export class ListarComponent {
   totalRecords!: number;
   loading: boolean = true;
   pageSize: number = 10;
-
+  
   constructor(private cotizacionService: CotizacionService,
     private router: Router,
     private messageService: MessageService,
-    private confirmationService: ConfirmationService) { }
+    private confirmationService: ConfirmationService,
+    private datePipe: DatePipe) { }
 
   ngOnInit(): void {
     this.obtenerCotizaciones();
+ 
     this.cols = [
-      { campo: 'monedas.nombre', nombre: 'Nombre' },
-      { campo: 'monedas.codigo', nombre: 'Codigo Swift' },
-      { campo: 'valor', nombre: 'Valor', pipe: true },
-     
+      { campo: 'fechaCotizacion', nombre: 'Fecha', mipipe: DatePipe, parampipe: ['dd/MM/yyyy']},
+      { campo: 'moneda.nombre', nombre: 'Nombre' },
+      { campo: 'moneda.codigo', nombre: 'Codigo Swift' },
+      { campo: 'tipo.nombre', nombre: 'Tipo' },
+      { campo: 'valor', nombre: 'Valor',  mipipe: DecimalPipe, parampipe:['1.2-3', 'es']},
+      
     //  { campo: 'fecha_Cotizacion', nombre: 'Fecha' },
     ];
   }
@@ -110,6 +118,7 @@ export class ListarComponent {
       next: (response) => {
         this.cotizaciones = response.data;
         this.totalRecords = response.totalRecords;
+       
       },
       complete: () => {
         this.loading = false;

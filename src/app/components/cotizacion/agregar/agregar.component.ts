@@ -5,7 +5,7 @@ import { Router } from '@angular/router';
 import { Observable, Subscription, catchError, throwError } from 'rxjs';
 import { MessageService } from 'primeng/api';
 import { Moneda } from '../../moneda/interfaces/moneda.interface';
-import { Cotizacion } from '../interfaces/cotizacion.interface';
+import { Cotizacion, Tipo } from '../interfaces/cotizacion.interface';
 import { MonedaService } from '../../moneda/services/moneda.service';
 import { CotizacionService } from '../services/cotizacion.service';
 
@@ -24,7 +24,7 @@ export class AgregarComponent {
   private _cotizacion!: Cotizacion | null;
   private _monedasSubscription!:Subscription;
   private _cotizacionSubscription!:Subscription;
-
+  private _tipos!:Tipo[];
   constructor(private monedaService: MonedaService,
     private cotizacionService: CotizacionService,
     private messageService: MessageService,
@@ -49,6 +49,11 @@ export class AgregarComponent {
   }
   public set cotizacion(value: Cotizacion | null) {
     this._cotizacion = value;
+  }
+
+  public get tipos(): Tipo[] {
+    this._tipos = this.cotizacionService.tipos;
+    return this._tipos
   }
 
   ngOnInit(): void {
@@ -82,7 +87,7 @@ export class AgregarComponent {
       detail: successMessage,
       life: 3000
     });
-    this.router.navigateByUrl('/moneda');
+    this.router.navigateByUrl('/cotizacion');
   }
 
   private handleError(errorMessage: string, error: any): Observable<never> {
@@ -102,8 +107,9 @@ export class AgregarComponent {
   setForm() {
     this.miFormulario = this.formBuilder.group({
       id: [''],
-      monedas: new FormControl<Moneda[]>([], Validators.required),
-      valor: ['', Validators.required]
+      moneda: new FormControl<Moneda[]>([], Validators.required),
+      tipo: ['', Validators.required],
+      valor: ['', Validators.required],
     })
   }
 
@@ -140,6 +146,29 @@ export class AgregarComponent {
     this.router.navigateByUrl('/cotizacion');
   }
 
-  submit(){}
+  submit() {
+    //debugger
+    let operation: Observable<any>;
+    const cotizacionFormValue = { ...this.miFormulario.value };
+    this.miFormulario.setValue(cotizacionFormValue);
+    
+    if (this.isEditar) {
+      operation = this.cotizacionService.editar(this.miFormulario.value);
+    } else {
+      operation = this.cotizacionService.agregar(this.miFormulario.value);
+    }
+
+    this._cotizacionSubscription = operation.pipe(
+      catchError((error) => this.handleError('Error al ' + (this.isEditar ? 'editar' : 'agregar') + ' la Cotizacion:', error))
+    ).subscribe({
+      next: (cotizacion) => {
+        this.handleSuccess('Cotizacion ' + (this.isEditar ? 'editada' : 'agregada') + ' correctamente');
+      },
+      error: (error) => {
+        let errorMessage = 'Ocurrió un error al ' + (this.isEditar ? 'editar' : 'agregar') + ' la Cotizacion';
+        this.handleError(errorMessage, error);
+      }
+    });
+  }
 
 }

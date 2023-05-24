@@ -1,41 +1,39 @@
 <div class="card">
-    <p-table #dt1  [columns]="columnas" [value]="lista"  responsiveLayout="scroll" [tableStyle]="{ 'min-width': '50rem' }"
-    [paginator]="true"
-    [showCurrentPageReport]="true"
-    [tableStyle]="{ 'min-width': '50rem' }"
-    currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} entradas"
-    [rowsPerPageOptions]="[10, 25, 50]"
-    [rows]="pageSize" [totalRecords]="totalRecords"
-    [lazy]="true"
-    [loading]="loading" 
-    (onLazyLoad)="onLazyLoad($event)">
+    <p-table #dt1 [columns]="columnas" [value]="lista" responsiveLayout="scroll" [tableStyle]="{ 'min-width': '50rem' }"
+        [paginator]="true" [showCurrentPageReport]="true" [tableStyle]="{ 'min-width': '50rem' }"
+        currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} entradas"
+        [rowsPerPageOptions]="[10, 25, 50]" [rows]="pageSize" [totalRecords]="totalRecords" [lazy]="true"
+        [loading]="loading" (onLazyLoad)="onLazyLoad($event)" styleClass="numeric-align-table"
+        bodyStyleClass="numeric-align-body">
         <ng-template pTemplate="header" let-columns>
             <tr>
                 <th *ngFor="let col of columns">
-                    {{ col.nombre }}
+                    <span style="float: center">
+                        <p>{{ col.nombre }}</p>
+                    </span>
                 </th>
                 <th></th>
             </tr>
-            
         </ng-template>
         <ng-template pTemplate="body" let-rowData let-columns="columns">
             <tr>
                 <td *ngFor="let col of columns">
-                    
-                    <ng-container *ngIf="!col.pipe">
+                    <ng-container *ngIf="!col.mipipe">
                         <p>{{ getPropertyValue(rowData, col.campo)}}</p>
                     </ng-container>
-                    <ng-container *ngIf="col.pipe">
-                        <p>{{ getPropertyValue(rowData, col.campo) | numberFormat }}</p>
+                    <ng-container *ngIf="col.mipipe">
+                        <span style="float: right">
+                            <p>{{ getPropertyValue(rowData, col.campo) | dynamicPipe: col.mipipe:col.parampipe}}</p>
+                        </span>
                     </ng-container>
                 </td>
-                
+
                 <td>
                     <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2"
                         (click)="onEditProduct(getPropertyValue(rowData, id))"></button>
                     <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning"
                         (click)="onDeleteProduct(getPropertyValue(rowData, id))"></button>
-                </td>  
+                </td>
             </tr>
         </ng-template>
         <ng-template pTemplate="emptymessage">

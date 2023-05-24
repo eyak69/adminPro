@@ -28,15 +28,7 @@ export class MonedaService {
     return this.http.delete<Moneda>(url);
   }
 
-  agregar(moneda: Moneda): Observable<Moneda | {}> {
-    console.log(moneda);
-    return this.http.post<Moneda>(`${this._baseUrl}/moneda`, moneda).pipe(
-      catchError((error: any) => {
-        console.error('Error al crear moneda:', error);
-        return of({});
-      })
-    );
-  }
+  
 
   getMoneda(id: number): Observable<Moneda | null> {
     //escribir codigo
@@ -94,4 +86,15 @@ export class MonedaService {
       })
     );
   }
+
+  agregar(moneda: Moneda): Observable<Moneda | {}> {
+    console.log(moneda);
+    return this.http.post<Moneda>(`${this._baseUrl}/moneda`, moneda).pipe(
+      catchError((error: any) => {
+        console.error('Error al crear moneda:', error);
+        return of({});
+      })
+    );
+  }
+  
 }

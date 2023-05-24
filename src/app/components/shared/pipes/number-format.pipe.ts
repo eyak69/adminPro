@@ -5,12 +5,14 @@ import { Pipe, PipeTransform } from '@angular/core';
 })
 export class NumberFormatPipe implements PipeTransform {
 
-  transform(numero: number): string {
-    //debugger
-    const partes = numero.toFixed(3).split('.');
-    const enteros = partes[0].padStart(10, '0');
-    const decimales = partes[1];
-    return `${enteros}.${decimales}`;
+
+  transform(numero: number, ...args: any[]): string {
+    const [arg1, arg2] = args
+    const options = {
+      minimumFractionDigits: arg1,
+      maximumFractionDigits: arg2
+    };
+    return numero.toLocaleString('es', options);
   }
 
 }

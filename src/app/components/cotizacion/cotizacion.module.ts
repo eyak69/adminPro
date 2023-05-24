@@ -9,6 +9,7 @@ import { SharedModule } from '../shared/shared.module';
 
 
 
+
 @NgModule({
   declarations: [
     ListarComponent,
@@ -19,7 +20,7 @@ import { SharedModule } from '../shared/shared.module';
     CotizacionRoutingModule,
     ReactiveFormsModule,
     PrimeNgModule,
-    SharedModule 
+    SharedModule,
   ]
 })
 export class CotizacionModule { }

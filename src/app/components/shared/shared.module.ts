@@ -12,8 +12,10 @@ import { ToolbarGroupComponent } from './toolbar-group/toolbar-group.component';
 import { TableGroupComponent } from './table-group/table-group.component';
 import { NumberGroupComponent } from './number-group/number-group.component';
 import { NumberFormatPipe } from './pipes/number-format.pipe';
-
-
+import { DynamicPipePipe } from './pipes/dynamic-pipe.pipe';
+import { PercentPipe } from '@angular/common';
+import { DecimalPipe }  from '@angular/common';
+import { DatePipe } from '@angular/common';
 
 
 @NgModule({
@@ -26,7 +28,8 @@ import { NumberFormatPipe } from './pipes/number-format.pipe';
     ToolbarGroupComponent,
     TableGroupComponent,
     NumberGroupComponent,
-    NumberFormatPipe
+    NumberFormatPipe,
+    DynamicPipePipe
   ],
   exports:[
     ButtonGroupComponent,
@@ -37,12 +40,20 @@ import { NumberFormatPipe } from './pipes/number-format.pipe';
     ToolbarGroupComponent,
     TableGroupComponent,
     NumberGroupComponent,
-    NumberFormatPipe
+    NumberFormatPipe,
+    DynamicPipePipe
   ],
   imports: [
     CommonModule,
     PrimeNgModule,
     ReactiveFormsModule,
-  ]
+  ],
+  providers: [
+    // list all pipes you would like to use
+    PercentPipe,
+    NumberFormatPipe,
+    DecimalPipe,
+    DatePipe
+    ],
 })
 export class SharedModule { }

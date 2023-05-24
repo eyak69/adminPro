@@ -1,12 +1,27 @@
 import { Component, EventEmitter, Input, Output, SimpleChanges, TemplateRef, ViewChild } from '@angular/core';
 import { Columnas } from './table-columns';
 import { NumberFormatPipe } from '../pipes/number-format.pipe';
-
-
+import { DynamicPipePipe } from '../pipes/dynamic-pipe.pipe';
+import { PercentPipe } from '@angular/common';
 @Component({
   selector: 'app-table-group',
   templateUrl: './table-group.component.html',
-  styles: []
+  styles: [`
+  
+.text-align-left {
+  text-align: right;
+}
+  
+  .numeric-align-table .numeric-align {
+  text-align: right;
+}
+
+.numeric-align-body .numeric-align {
+  text-align: right;
+}
+
+  
+  `]
 })
 export class TableGroupComponent {
   @ViewChild('numberFormatTemplate') numberFormatTemplate!: TemplateRef<any>;
@@ -21,19 +36,20 @@ export class TableGroupComponent {
   @Output() deleteEvent: EventEmitter<any> = new EventEmitter<any>();
   @Output() pageEvent: EventEmitter<any> = new EventEmitter<any>();
   @Output() lazyLoadEvent: EventEmitter<any> = new EventEmitter<any>();
-
-
+  
   ngOnInit(): void {
     //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
     //Add 'implements OnInit' to the class.
     //debugger
+
+
   }
 
   ngOnChanges(changes: SimpleChanges): void {
     //Called before any other lifecycle hook. Use it to inject dependencies, but avoid any serious work here.
     //Add '${implements OnChanges}' to the class.
     //debugger
-    //console.log(changes);
+    //console.log(this.columnas);
     //console.log(this.lista);
   }
 
@@ -44,7 +60,9 @@ export class TableGroupComponent {
   }
 
   getPropertyValue(obj: any, propertyPath: string): any {
+   // debugger
     const value = eval(`obj.${propertyPath}`);
+    console.log(value)
     return value;
   }
 
@@ -68,15 +86,9 @@ export class TableGroupComponent {
     console.log(event);
   }
 
-  // Obtén las referencias a los templates
-  getDirectiveTemplate(directiva: string, value: any) {
-    switch (directiva) {
-      case 'appNumberFormat':
-        return this.numberFormatTemplate;
-      // Agrega más casos para otras directivas si es necesario
-      default:
-        return null;
-    }
+  isNumber(value: any): boolean {
+    const respuesta = typeof value === 'number' && !isNaN(value)
+    return respuesta;
   }
 
 }
