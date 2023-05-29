@@ -11,8 +11,8 @@
                     <table>
                         <thead>
                             <tr>
-                                <th class="text-900 font-medium text-xl left-align">Tipo</th>
-                                <th class="text-900 font-medium text-xl right-align">Valor</th>
+                                <th class="text-900 font-medium text-xl column-heading left-align">Tipo</th>
+                                <th class="text-900 font-medium text-xl column-heading right-align">Valor</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -42,14 +42,14 @@
                     <table>
                         <thead>
                             <tr>
-                                <th class="text-900 font-medium text-xl left-align">Tipo</th>
-                                <th class="text-900 font-medium text-xl right-align">Valor</th>
+                                <th class="text-900 font-medium text-xl column-heading">Tipo</th>
+                                <th class="text-900 font-medium text-xl column-heading">Valor</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr *ngFor="let lista of listaCotizacion1">
-                                <td class="left-align">{{ lista.tipo?.nombre }}</td>
-                                <td class="right-align">{{ lista.valor | number:'1.2-2' }}</td>
+                                <td>{{ lista.tipo?.nombre }}</td>
+                                <td>{{ lista.valor }}</td>
                             </tr>
                         </tbody>
                     </table>
@@ -73,14 +73,14 @@
                     <table>
                         <thead>
                             <tr>
-                                <th class="text-900 font-medium text-xl left-align">Tipo</th>
-                                <th class="text-900 font-medium text-xl right-align">Valor</th>
+                                <th class="text-900 font-medium text-xl column-heading">Tipo</th>
+                                <th class="text-900 font-medium text-xl column-heading">Valor</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr *ngFor="let lista of listaCotizacion2">
-                                <td class="left-align">{{ lista.tipo?.nombre }}</td>
-                                <td class="right-align">{{ lista.valor | number:'1.2-2' }}</td>
+                                <td>{{ lista.tipo?.nombre }}</td>
+                                <td>{{ lista.valor }}</td>
                             </tr>
                         </tbody>
                     </table>

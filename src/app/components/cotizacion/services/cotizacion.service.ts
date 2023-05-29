@@ -4,6 +4,8 @@ import { environment } from 'src/environments/environment';
 import { Observable, catchError, filter, map, of } from 'rxjs';
 import { Cotizacion, CotizacionResponse, Tipo } from '../interfaces/cotizacion.interface';
 import { LazyLoadEvent } from 'primeng/api';
+import { BehaviorSubject } from 'rxjs';
+
 
 @Injectable({
   providedIn: 'root'
@@ -12,14 +14,22 @@ export class CotizacionService {
   private _baseUrl: string = environment.baseUrl;
   private _cotizacion: Cotizacion[] = [];
   private _tipos: Tipo[] = [{ tipo: 0, nombre: 'Compra' }, { tipo: 1, nombre: 'Venta' }];
-
-
+  //  
+  cotizacionSubject: BehaviorSubject<Cotizacion|null> = new BehaviorSubject<Cotizacion|null>(null);
 
   constructor(private http: HttpClient) { }
 
-  borrar(id: number): Observable<Cotizacion> {
+  borrar(id: number): Observable<Cotizacion| {}> {
     const url: string = `${this._baseUrl}/cotizacion/${id}`;
-    return this.http.delete<Cotizacion>(url);
+    return this.http.delete<Cotizacion>(url).pipe(
+      map((cotizacion: Cotizacion) => {
+        this.cotizacionSubject.next(cotizacion);
+        return cotizacion;
+      }),
+      catchError((error: any) => {
+        console.error('Error al editar cotizacion:', error);
+        return of({});
+      }));
   }
 
   editar(cotizacion: Cotizacion): Observable<Cotizacion | {}> {
@@ -27,6 +37,12 @@ export class CotizacionService {
     cotizacion.estado = cotizacion.tipo?.tipo ?? 0;
     console.log(cotizacion);
     return this.http.put<Cotizacion>(url, cotizacion).pipe(
+      map((nuevaCotizacion: Cotizacion) => {
+        // Aquí se realiza el proceso para agregar la cotización y se obtiene la nueva lista de cotizaciones
+        // Después de agregar la cotización, actualiza el valor del cotizacionSubject
+        this.cotizacionSubject.next(nuevaCotizacion);
+        return nuevaCotizacion;
+      }),
       catchError((error: any) => {
         console.error('Error al editar cotizacion:', error);
         return of({});
@@ -38,6 +54,12 @@ export class CotizacionService {
     console.log(cotizacion);
     cotizacion.estado = cotizacion.tipo?.tipo ?? 0;
     return this.http.post<Cotizacion>(`${this._baseUrl}/cotizacion`, cotizacion).pipe(
+      map((nuevaCotizacion: Cotizacion) => {
+        // Aquí se realiza el proceso para agregar la cotización y se obtiene la nueva lista de cotizaciones
+        // Después de agregar la cotización, actualiza el valor del cotizacionSubject
+        this.cotizacionSubject.next(nuevaCotizacion);
+        return nuevaCotizacion;
+      }),
       catchError((error: any) => {
         console.error('Error al crear cotizacion:', error);
         return of({});
@@ -70,7 +92,24 @@ export class CotizacionService {
           ...cotizacion,
           tipo: this.mapEstadoToTipo(cotizacion.estado),
         }));
+        debugger
         return cotizacionesActualizadas;
+      })
+    );
+  }
+
+  getCotizacionMoneda(id: number): Observable<Cotizacion[] | null> {
+    const url: string = `${this._baseUrl}/cotizacion/moneda/?id=${id}`;
+    return this.http.get<CotizacionResponse>(url).pipe(
+         map((response: CotizacionResponse) => {
+        //debugger
+        const cotizacionesActualizadas = response.data.map((cotizacion:Cotizacion) => (
+          {
+          ...cotizacion,
+          tipo: this.mapEstadoToTipo(cotizacion.estado),
+        }
+        ));
+        return cotizacionesActualizadas
       })
     );
   }
@@ -94,6 +133,7 @@ export class CotizacionService {
         });
       }),
       map((response: CotizacionResponse) => {
+        debugger
         const cotizacionesActualizadas = response.data.map(cotizacion => ({
           ...cotizacion,
           tipo: this.mapEstadoToTipo(cotizacion.estado),

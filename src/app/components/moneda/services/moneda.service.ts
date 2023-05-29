@@ -47,7 +47,10 @@ export class MonedaService {
     const pageSize = 1000
     const url: string = `${this._baseUrl}/moneda?page=${page}&pageSize=${pageSize}`;
     return this.http.get<MonedaResponse>(url).pipe(
-      map(response => response.data),
+      map(response => {
+        console.log(response);
+        return response.data
+      }),
       catchError((error: any) => {
         console.error('Error al buscar moneda:', error);
         return of([]);

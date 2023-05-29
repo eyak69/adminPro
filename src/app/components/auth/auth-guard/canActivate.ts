@@ -12,6 +12,7 @@ export const canActivate = (
 
   if (!authService.isLoggedIn) {
     router.navigate(['/auth/login']);
+    //router.navigate(['/']);
     return false;
   }
   return true;

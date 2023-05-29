@@ -29,10 +29,14 @@
                 </td>
 
                 <td>
-                    <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2"
-                        (click)="onEditProduct(getPropertyValue(rowData, id))"></button>
-                    <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning"
-                        (click)="onDeleteProduct(getPropertyValue(rowData, id))"></button>
+                    <ng-container *ngIf="isEditVisible">
+                        <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2"
+                            (click)="onEdit(getPropertyValue(rowData, id))"></button>
+                    </ng-container>
+                    <ng-container *ngIf="isDeleteVisible" >
+                        <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning"
+                            (click)="onDelete(getPropertyValue(rowData, id))"></button>
+                    </ng-container>
                 </td>
             </tr>
         </ng-template>

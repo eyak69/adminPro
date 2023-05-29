@@ -22,7 +22,10 @@ import { MultiSelectModule } from 'primeng/multiselect';
 import { PasswordModule } from 'primeng/password';
 import { DialogModule } from 'primeng/dialog';
 import { DynamicDialogModule } from 'primeng/dynamicdialog';
-
+import { ChartModule } from 'primeng/chart';
+import { MenuModule } from 'primeng/menu';
+import { StyleClassModule } from 'primeng/styleclass';
+import { PanelMenuModule } from 'primeng/panelmenu';
 
 
 @NgModule({
@@ -49,7 +52,11 @@ import { DynamicDialogModule } from 'primeng/dynamicdialog';
     MultiSelectModule, 
     PasswordModule,
     DialogModule,
-    DynamicDialogModule    
+    DynamicDialogModule,
+    ChartModule,
+    MenuModule,
+    StyleClassModule,
+    PanelMenuModule    
   ]
 })
 export class PrimeNgModule { }

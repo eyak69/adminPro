@@ -11,6 +11,7 @@ interface Cotizacion {
     estado: number;
     tipo?: Tipo;
     valor: number;
+    deleted?: boolean;
     fecha_cotizacion: string;
     fecha_vigencia: string;
   }

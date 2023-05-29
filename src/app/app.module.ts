@@ -16,10 +16,7 @@ import { registerLocaleData } from '@angular/common';
 import localeEs419 from '@angular/common/locales/es-419';
 import localeEs from '@angular/common/locales/es';
 import { LOCALE_ID } from '@angular/core';
-// Registra los datos de localización para el español latinoamericano
 
-
-// Registra los datos de localización para el español
 registerLocaleData(localeEs);
 @NgModule({
     declarations: [

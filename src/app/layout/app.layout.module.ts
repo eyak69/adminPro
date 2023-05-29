@@ -1,8 +1,4 @@
 import { NgModule } from '@angular/core';
-import { TieredMenuModule } from 'primeng/tieredmenu';
-import { MenubarModule } from 'primeng/menubar';
-import { MenuModule } from 'primeng/menu';
-
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
@@ -43,10 +39,7 @@ import { AppLayoutComponent } from "./app.layout.component";
         InputSwitchModule,
         RippleModule,
         RouterModule,
-        AppConfigModule,
-        TieredMenuModule,
-        MenubarModule,
-        MenuModule
+        AppConfigModule
     ],
     exports: [AppLayoutComponent]
 })

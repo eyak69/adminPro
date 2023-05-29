@@ -32,6 +32,8 @@ export class TableGroupComponent {
   @Input() public pageSize!: number;
   @Input() public totalRecords!: number
   @Input() public loading!: boolean
+  @Input() public isEditVisible: boolean = true;
+  @Input() public isDeleteVisible: boolean = true;
   @Output() editEvent: EventEmitter<any> = new EventEmitter<any>();
   @Output() deleteEvent: EventEmitter<any> = new EventEmitter<any>();
   @Output() pageEvent: EventEmitter<any> = new EventEmitter<any>();
@@ -66,12 +68,12 @@ export class TableGroupComponent {
     return value;
   }
 
-  onEditProduct(id: any) {
+  onEdit(id: any) {
     console.log(id);
     this.editEvent.emit(id);
   }
 
-  onDeleteProduct(id: any) {
+  onDelete(id: any) {
     console.log(id);
     this.deleteEvent.emit(id);
   }

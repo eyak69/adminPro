@@ -50,7 +50,7 @@ export class AgregarComponent {
     const monedaFormValue = { ...this.miFormulario.value };
     monedaFormValue.codigo = monedaFormValue.codigo.toUpperCase(); // Convertir a mayúsculas
     this.miFormulario.setValue(monedaFormValue);
-    
+
     if (this.isEditar) {
       operation = this.monedaService.editar(this.miFormulario.value);
     } else {

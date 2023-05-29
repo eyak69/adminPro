@@ -4,8 +4,8 @@ import { ListarComponent } from './listar/listar.component';
 import { AgregarComponent } from './agregar/agregar.component';
 import { CotizacionRoutingModule } from './cotizacion-routing.module';
 import { ReactiveFormsModule } from '@angular/forms';
-import { PrimeNgModule } from 'src/app/prime-ng/prime-ng.module';
 import { SharedModule } from '../shared/shared.module';
+import { PrimeNgModule } from '../prime-ng/prime-ng.module';
 
 
 

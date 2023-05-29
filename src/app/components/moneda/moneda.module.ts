@@ -4,7 +4,7 @@ import { AgregarComponent } from './agregar/agregar.component';
 import { ListarComponent } from './listar/listar.component';
 import { MonedaRoutingModule } from './moneda-routing.module';
 import { ReactiveFormsModule } from '@angular/forms';
-import { PrimeNgModule } from 'src/app/prime-ng/prime-ng.module';
+import { PrimeNgModule } from '../prime-ng/prime-ng.module';
 import { SharedModule } from '../shared/shared.module';
 
 

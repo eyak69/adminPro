@@ -2,7 +2,8 @@
 <p-card>
     <app-toolbar-group titulo="Cotizaciones" 
     (actualizarEvent)="actualizarCotizacion()" (nuevoEvent)="nuevaCotizacion()"></app-toolbar-group>
-    <app-table-group [lista]="cotizaciones" [columnas]="cols" [id]="id" 
+    <app-table-group [lista]="cotizaciones" [columnas]="cols" [id]="id"
+    [isEditVisible]="false" [isDeleteVisible]="false" 
     (editEvent)="editCotizacion($event)"
     (deleteEvent)="deleteCotizacion($event)"
     [pageSize]="10" [totalRecords]="totalRecords"

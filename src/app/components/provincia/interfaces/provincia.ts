@@ -1,9 +1,12 @@
 import { Sucursal } from "../../sucursal/interfaces/sucursal";
+import { Pais } from "../../pais/interfaces/pais.interface";
 
 interface Provincia {
     id?: number;
     nombre: string;
+    pais: Pais;
     sucursales?: Sucursal[];
+
 }
 
 interface ProvinciaResponse {

@@ -31,7 +31,8 @@ export class ListarComponent {
   ngOnInit(): void {
     this.obtenerProvincias({ first: 0, rows: this.pageSize } as LazyLoadEvent);
     this.cols = [
-      { campo: 'nombre', nombre: 'Nombre' }
+      { campo: 'nombre', nombre: 'Provincia' },
+      { campo: 'pais.nombre', nombre: 'Pais' }
     ];
   }
 

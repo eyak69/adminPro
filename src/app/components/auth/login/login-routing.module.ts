@@ -1,8 +1,6 @@
-import {  NgModule } from '@angular/core';
-import { Router, RouterModule } from '@angular/router';
+import { NgModule } from '@angular/core';
+import { RouterModule } from '@angular/router';
 import { LoginComponent } from './login.component';
-
-
 
 @NgModule({
     imports: [RouterModule.forChild([
@@ -10,13 +8,4 @@ import { LoginComponent } from './login.component';
     ])],
     exports: [RouterModule]
 })
-export class LoginRoutingModule   {
-
-    constructor(private router:Router){
-
-    }
-   
-   
-
-
- }
+export class LoginRoutingModule { }
