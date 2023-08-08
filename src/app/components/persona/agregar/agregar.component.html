@@ -1,0 +1,37 @@
+<p-toast></p-toast>
+<div class="card">
+    <h3>{{isEditar?'Editar Persona':'Nueva Persona'}}</h3>
+    <form autocomplete="off" [formGroup]="miFormulario" (ngSubmit)="submit()">
+        <div class="card p-fluid">
+            
+            <app-text-group labelText="Nombre de la Persona" inputType="text" controlName="nombre">
+            </app-text-group>
+
+            <app-text-group labelText="Razon Social de la Persona" inputType="text" controlName="razonSocial">
+            </app-text-group>
+            
+            <app-text-group labelText="Direccion de la Persona" inputType="text" controlName="direccion">
+            </app-text-group>
+            
+            <app-text-group labelText="CUIT de la Persona" inputType="text" controlName="cuit">
+            </app-text-group>
+
+            <app-text-group labelText="Telefono de la Persona" inputType="text" controlName="telefono">
+            </app-text-group>
+
+            <app-text-group labelText="Email de la Persona" inputType="email" controlName="email">
+            </app-text-group>
+
+            <app-multiselect-group controlName="tipoPersona" optionLabel="nombre" [lista]="tipoPersona"
+                defaultLabel="Seleccione" labelText="Tipo Persona">
+            </app-multiselect-group>
+
+            <app-dropdown-group controlName="pais" optionLabel="nombre" [lista]="paises" placeholder="Elija el Pais"
+                labelText="Pais" (valueChange)="onPaisValueChange($event)"></app-dropdown-group>
+
+            <app-dropdown-group controlName="provincia" optionLabel="nombre" [lista]="provincias"
+                placeholder="Elija la Provincia" labelText="Provincia"></app-dropdown-group>
+        </div>
+        <app-button-group [formGroup]="miFormulario" (cancelarEvent)="cancelar()"></app-button-group>
+    </form>
+</div>

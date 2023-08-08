@@ -1,0 +1,15 @@
+<p-toast></p-toast>
+
+<p-card>
+    <app-toolbar-group titulo="Personas"
+        (actualizarEvent)="actualizarPersona()" (nuevoEvent)="nuevaPersona()"></app-toolbar-group>
+    <app-table-group [lista]="personas" [columnas]="cols" [id]="id"
+        (editEvent)="editPersona($event)"
+        (deleteEvent)="deletePersona($event)"
+        [pageSize]="10" [totalRecords]="totalRecords"
+        [loading]="loading"
+        (lazyLoadEvent)="obtenerPersonas($event)">
+    </app-table-group>
+</p-card>
+
+<p-confirmDialog [style]="{width: '450px'}"></p-confirmDialog>

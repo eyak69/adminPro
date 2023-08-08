@@ -1,10 +1,11 @@
 import { Component } from '@angular/core';
-import { Pais } from '../interfaces/pais.interface';
-import { PaisService } from '../services/pais.service';
+import { Persona } from '../interfaces/persona.interface';
+import { PersonaService } from '../services/persona.service';
 import { Columnas } from '../../shared/table-group/table-columns';
 import { Router } from '@angular/router';
 import { MessageService, ConfirmationService, LazyLoadEvent } from 'primeng/api';
 import { catchError, tap, throwError } from 'rxjs';
+
 
 @Component({
   selector: 'app-listar',
@@ -13,7 +14,7 @@ import { catchError, tap, throwError } from 'rxjs';
   providers: [MessageService, ConfirmationService]
 })
 export class ListarComponent {
-  public paises: Pais[] = [];
+  public personas: Persona[] = [];
   public cols!: Columnas[];
   public id: string = "id";
 
@@ -21,60 +22,66 @@ export class ListarComponent {
   loading: boolean = true;
   pageSize: number = 10;
 
-  constructor(
-    private paisService: PaisService,
+  constructor(private personaService: PersonaService,
     private router: Router,
     private messageService: MessageService,
-    private confirmationService: ConfirmationService
-  ) { }
+    private confirmationService: ConfirmationService) { }
 
   ngOnInit(): void {
-    this.obtenerPaises();
+    this.obtenerPersonas();
     this.cols = [
-      { campo: 'nombre', nombre: 'Nombre' }
+      { campo: 'nombre', nombre: 'Nombre' },
+      { campo: 'telefono', nombre: 'Telefono' },
+      { campo: 'direccion', nombre: 'Direccion' },
+      { campo: 'email', nombre: 'Email' },
+      { campo: 'razonSocial', nombre: 'Razon Social' },
+      { campo: 'cuit', nombre: 'CUIT' },
+      { campo: 'pais.nombre', nombre: 'Pais' },
+      { campo: 'provincia.nombre', nombre: 'Provincia' }
     ];
   }
 
-  editarPais(id: any) {
-    console.log('Editando país con ID:', id);
-    this.router.navigateByUrl(`/pais/editar/${id}`);
-    // Aquí puedes realizar las acciones necesarias para editar el país
+  editPersona(id: any) {
+    console.log('Editando persona con ID:', id);
+    this.router.navigateByUrl(`/persona/editar/${id}`);
+    // Aquí puedes realizar las acciones necesarias para editar la persona
   }
 
-  actualizarPaises() {
-    this.obtenerPaises();
+  actualizarPersona() {
+    this.obtenerPersonas();
   }
 
-  nuevoPais() {
-    this.router.navigateByUrl(`/pais/agregar`);
+  nuevaPersona() {
+    this.router.navigateByUrl(`/persona/agregar`);
   }
 
-  eliminarPais(id: any) {
+  deletePersona(id: any) {
+    console.log('Eliminando persona con ID:', id);
     this.confirmationService.confirm({
-      message: '¿Está seguro de borrar el país?',
+      message: 'Esta seguro de borrar la persona?',
       header: 'Confirmar',
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
-        this.paisService.borrarPais(id).pipe(
+        console.log(id);
+        this.personaService.borrar(id).pipe(
           catchError((error) => {
-            console.error('Error al borrar el país:', error);
+            console.error('Error al borrar la Persona:', error);
             return throwError(() => error); // Propaga el error al método que llama
           })
         ).subscribe({
           next: () => {
-
           },
           complete: () => {
             this.messageService.add({
               severity: 'success',
               summary: 'Éxito',
-              detail: 'País borrado',
+              detail: 'Persona borrada',
               life: 3000
             });
-            this.obtenerPaises(); // Actualizar la lista después de borrar
+            this.obtenerPersonas(); // Actualizar la lista después de borrar
           },
           error: (error) => {
-            let errorMessage = 'Ocurrió un error al borrar el país';
+            let errorMessage = 'Ocurrió un error al borrar la Persona';
             if (error.error && error.error.message) {
               errorMessage = error.error.message;
             }
@@ -84,29 +91,32 @@ export class ListarComponent {
               detail: errorMessage,
               life: 3000
             });
-          },
+          }
         });
       }
     });
   }
 
-  obtenerPaises(event?: LazyLoadEvent) {
+  obtenerPersonas(event?: LazyLoadEvent) {
     this.loading = true;
-    this.paisService.getPaisesLazy(event).pipe(
+    /*const page = event?.first ? event.first / (event.rows ?? 10) + 1 : 1;
+    const pageSize = event?.rows ?? 10;*/
+
+    this.personaService.getPersonasLazy(event).pipe(
       catchError((error) => {
-        console.error('Error al obtener los países:', error);
+        console.error('Error al obtener las personas:', error);
         return throwError(() => error); // Propaga el error al método que llama
       })
     ).subscribe({
       next: (response) => {
-        this.paises = response.data;
+        this.personas = response.data;
         this.totalRecords = response.totalRecords;
       },
       complete: () => {
         this.loading = false;
       },
       error: (error) => {
-        let errorMessage = 'Ocurrió un error al obtener los países';
+        let errorMessage = 'Ocurrió un error al obtener las personas';
         if (error.error && error.error.message) {
           errorMessage = error.error.message;
         }

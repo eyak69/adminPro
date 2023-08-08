@@ -13,6 +13,7 @@ export class DropdownGroupComponent {
   @Input() public controlName!: string;
   @Input() public optionLabel!: string
   @Input() public placeholder!: string
+  @Output() public valueChange = new EventEmitter<any>();
  
   
   miFormulario!: FormGroup;
@@ -26,5 +27,10 @@ export class DropdownGroupComponent {
       this.miFormulario = <FormGroup>this.controlContainer.control;
       this.control = this.miFormulario.get(this.controlName);
   }  
+
+  onValueChange(event: any) {
+    this.valueChange.emit(event.value);
+  }
+
 
 }

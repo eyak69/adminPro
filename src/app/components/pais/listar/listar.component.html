@@ -1,1 +1,14 @@
-<p>listar works!</p>
+<p-toast></p-toast>
+<p-card>
+    <app-toolbar-group titulo="Paises" 
+    (actualizarEvent)="actualizarPaises()" (nuevoEvent)="nuevoPais()">
+    </app-toolbar-group>
+    <app-table-group [lista]="paises" [columnas]="cols" [id]="id" 
+    (editEvent)="editarPais($event)"
+    (deleteEvent)="eliminarPais($event)"
+    [pageSize]="10" [totalRecords]="totalRecords"
+    [loading]="loading"
+    (lazyLoadEvent)="obtenerPaises($event)">>
+    </app-table-group>
+</p-card>
+<p-confirmDialog [style]="{width: '450px'}"></p-confirmDialog>

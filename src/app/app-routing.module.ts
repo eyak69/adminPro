@@ -17,6 +17,7 @@ import { AppLayoutComponent } from "./layout/app.layout.component";
                     { path: 'provincia', loadChildren: () => import('./components/provincia/provincia.module').then(m => m.ProvinciaModule)},
                     { path: 'cotizacion', loadChildren: () => import('./components/cotizacion/cotizacion.module').then(m => m.CotizacionModule)},
                     { path: 'pais', loadChildren: () => import('./components/pais/pais.module').then(m => m.PaisModule)},
+                    { path: 'persona', loadChildren: () => import('./components/persona/persona.module').then(m => m.PersonaModule)},
 
 //                    { path: '', loadChildren: () => import('./components/dashboard/dashboard.module').then(m => m.DashboardModule) },
                     { path: 'uikit', loadChildren: () => import('./demo/components/uikit/uikit.module').then(m => m.UIkitModule) },

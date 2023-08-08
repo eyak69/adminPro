@@ -2,7 +2,7 @@
     <div class="field">
         <label for="{{ controlName }}">{{ labelText }}</label>
         <p-dropdown formControlName="{{ controlName }}" [options]="lista" optionLabel="{{optionLabel}}"
-            placeholder="{{ placeholder }}" p-dropdown-clearable>
+            placeholder="{{ placeholder }}" (onChange)="onValueChange($event)" p-dropdown-clearable>
         </p-dropdown>
        <!-- <p-dropdown formControlName="{{ controlName }}" [options]="lista" optionLabel="{{optionLabel}}"></p-dropdown> -->
     </div>

@@ -11,6 +11,7 @@ import { CotizacionService } from '../cotizacion/services/cotizacion.service';
 import { DecimalPipe } from '@angular/common';
 import { DashboardService } from './services/dashboard.service';
 import { Dashboard } from '../shared/interfaces/app.interface';
+import { DolarSi } from './interfaces/dolarsi.interface';
 
 interface City {
     name: string;
@@ -62,6 +63,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
     listaCotizacion1!: Cotizacion[]
     listaCotizacion2!: Cotizacion[]
 
+    listaCotizacionDolarSi: DolarSi[] = [];
 
     constructor(
         private productService: ProductService,
@@ -82,7 +84,6 @@ export class DashboardComponent implements OnInit, OnDestroy {
         }, refreshInterval);
 
         this.cotizacionService.cotizacionSubject.subscribe((cotizacion: Cotizacion | null) => {
-            // debugger
            this.configDashboard();
         });
 
@@ -270,6 +271,14 @@ export class DashboardComponent implements OnInit, OnDestroy {
             if (this.selectedMoneda2.id != undefined)
                 this.buscarCotizaciones(this.selectedMoneda2.id, 2)
         }
+
+        
+        this.dashBoardService.getDolarSi().subscribe((cotizaciones: DolarSi[]) => {
+            debugger
+            this.listaCotizacionDolarSi = cotizaciones
+            console.log(this.listaCotizacionDolarSi);
+        });
+
           
     }
 
@@ -281,7 +290,6 @@ export class DashboardComponent implements OnInit, OnDestroy {
             complete: () => {
                 console.log('Proceso de obtención de cotizaciones completado');
                 if (this.listaCotizacion) {
-                    //debugger
                     switch (posicion) {
                         case 0:
                             console.log('Opción 0 seleccionada');

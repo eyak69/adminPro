@@ -1,1 +1,11 @@
-<p>agregar works!</p>
+<p-toast></p-toast>
+<div class="card">
+  <h3>{{ isEditar ? 'Editar Moneda' : 'Nueva Moneda' }}</h3>
+  <form autocomplete="off" [formGroup]="miFormulario" (ngSubmit)="submit()">
+    <div class="card p-fluid">
+      <app-text-group labelText="Nombre del Pais" inputType="text" controlName="nombre"></app-text-group>
+      <!-- <app-text-group labelText="Locale Moneda" inputType="text" controlName="locale"></app-text-group> -->
+    </div>
+    <app-button-group [formGroup]="miFormulario" (cancelarEvent)="cancelar()"></app-button-group>
+  </form>
+</div>

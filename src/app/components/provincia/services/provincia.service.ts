@@ -78,6 +78,7 @@ export class ProvinciaService {
   }
 
   editar(provincia: Provincia): Observable<Provincia | {}> {
+    debugger
     console.log(provincia);
     return this.http.put<Provincia>(`${this._baseUrl}/provincia/${provincia.id}`, provincia)
       .pipe(

@@ -29,6 +29,7 @@ export class AppMenuComponent implements OnInit {
                     { label: 'Moneda', icon: 'pi pi-fw pi-circle', routerLink: ['/moneda'] },
                     { label: 'Cotizacion', icon: 'pi pi-fw pi-circle', routerLink: ['/cotizacion'] },
                     { label: 'Pais', icon: 'pi pi-fw pi-circle', routerLink: ['/pais'] },
+                    { label: 'Persona', icon: 'pi pi-fw pi-circle', routerLink: ['/persona'] },
                     /*
                     { label: 'Form Layout', icon: 'pi pi-fw pi-id-card', routerLink: ['/uikit/formlayout'] },
                     { label: 'Input', icon: 'pi pi-fw pi-check-square', routerLink: ['/uikit/input'] },

@@ -1,13 +1,12 @@
+
+import { PersonaRoutingModule } from './persona-routing.module';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { AgregarComponent } from './agregar/agregar.component';
 import { ListarComponent } from './listar/listar.component';
-import { PaisRoutingModule } from './pais-routing.module';
 import { ReactiveFormsModule } from '@angular/forms';
 import { PrimeNgModule } from '../prime-ng/prime-ng.module';
 import { SharedModule } from '../shared/shared.module';
-
-
 
 @NgModule({
   declarations: [
@@ -16,10 +15,12 @@ import { SharedModule } from '../shared/shared.module';
   ],
   imports: [
     CommonModule,
-    PaisRoutingModule,
     ReactiveFormsModule,
     PrimeNgModule,
-    SharedModule 
+    SharedModule
+  ],
+  exports: [
+    PersonaRoutingModule
   ]
 })
-export class PaisModule { }
+export class PersonaModule { }
